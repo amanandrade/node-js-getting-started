@@ -17,6 +17,7 @@ jobs:
     # #environment: 'DEV'
     name: Add 3 and 7
     runs-on: ubuntu-latest
+    if: ${{ ! startsWith(github.ref, 'refs/heads/release') }}
     steps:
       - shell: bash
         run: |
@@ -53,7 +54,7 @@ jobs:
       #     path: math-homework.txt
 
   job_3:
-    # environment: 'PRD'
+    environment: 'PRD'
     name: Display results
     needs: job_2
     runs-on: ubuntu-latest
