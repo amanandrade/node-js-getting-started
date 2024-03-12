@@ -10,16 +10,12 @@ on:
       - 'release/*' 
  
   pull_request:
-    types: [opened, synchronize]
-    # branches: 
-    #   - 'develop'
 
 jobs:
   job_1:
     # #environment: 'DEV'
     name: Add 3 and 7
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
     steps:
       - shell: bash
         run: |
@@ -35,7 +31,7 @@ jobs:
     name: Multiply by 9
     needs: job_1
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/release') && github.event_name == 'pull_request' && github.base_ref == 'refs/heads/main'
+    if: github.event.pull_request.base.ref == 'refs/heads/main'
     steps:
       - shell: bash
         run: |
