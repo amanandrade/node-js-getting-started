@@ -56,7 +56,7 @@ jobs:
     name: Display results
     needs: job_2
     runs-on: ubuntu-latest
-    if: startsWith(fromJSON('["refs/heads/release", "refs/heads/hotfix"]'), github.ref)
+    if: startsWith(github.ref, 'refs/heads/release') || startsWith(github.ref, 'refs/heads/hotfix')
     steps:
       - shell: bash
         run: |
