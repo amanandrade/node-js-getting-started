@@ -11,8 +11,10 @@ on:
  
   pull_request:
     types: [opened, synchronize]
-    # branches: 
-    #   - 'develop'
+    branches: 
+      - 'feature/*'
+      - 'develop'
+      - 'release/*' 
 
 jobs:
   job_1:
