@@ -15,7 +15,7 @@ jobs:
     # #environment: 'DEV'
     name: Add 3 and 7
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop
+    if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
     steps:
       - shell: bash
         run: |
