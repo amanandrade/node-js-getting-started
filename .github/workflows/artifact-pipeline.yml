@@ -36,8 +36,8 @@ jobs:
     if: startsWith(github.ref, 'refs/heads/release') && github.event_name == 'pull_request' && github.base_ref == 'refs/heads/main'
     steps:
       - shell: bash
-          run: |
-            expr 3 * 9
+        run: |
+          expr 3 * 9
       # - name: Download math result for job 1
       #   uses: actions/download-artifact@v3
       #   with:
