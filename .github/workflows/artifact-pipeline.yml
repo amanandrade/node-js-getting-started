@@ -10,15 +10,12 @@ on:
       - 'develop'
       - 'release/*' 
  
-  pull_request:
-
 jobs:
   job_1:
     # #environment: 'DEV'
     name: Add 3 and 7
     runs-on: ubuntu-latest
-    # if: ${{ ! startsWith(github.ref, 'refs/heads/release') }}
-    if: ${{ ! startsWith(github.ref, 'refs/pull/*/head') }}
+    if: ${{ ! startsWith(github.ref, 'refs/heads/release') }}
     steps:
       - shell: bash
         run: |
@@ -59,6 +56,7 @@ jobs:
     name: Display results
     needs: job_2
     runs-on: ubuntu-latest
+    if: startsWith(fromJSON('["refs/heads/release", "refs/heads/hotfix"]'), github.ref)
     steps:
       - shell: bash
         run: |
