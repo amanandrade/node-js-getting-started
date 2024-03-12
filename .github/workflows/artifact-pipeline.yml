@@ -16,7 +16,6 @@ jobs:
     # #environment: 'DEV'
     name: Add 3 and 7
     runs-on: ubuntu-latest
-    if: github.event.pull_request.base.ref == 'refs/heads/develop'
     steps:
       - shell: bash
         run: |
