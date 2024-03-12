@@ -32,7 +32,8 @@ jobs:
     name: Multiply by 9
     needs: job_1
     runs-on: ubuntu-latest
-    if: github.event.pull_request.base.ref == 'refs/heads/main'
+    # if: github.event.pull_request.base.ref == 'refs/heads/main'
+    if: startsWith(github.ref, 'refs/heads/release')
     steps:
       - shell: bash
         run: |
