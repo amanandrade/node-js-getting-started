@@ -11,14 +11,15 @@ on:
  
   pull_request:
     types: [opened, synchronize]
-    branches: 
-      - 'develop'
+    # branches: 
+    #   - 'develop'
 
 jobs:
   job_1:
-    environment: 'DEV'
+    # #environment: 'DEV'
     name: Add 3 and 7
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
     steps:
       - shell: bash
         run: |
@@ -30,37 +31,44 @@ jobs:
           path: math-homework.txt
 
   job_2:
-    environment: 'HOM'
+    # environment: 'HOM'
     name: Multiply by 9
     needs: job_1
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/release') && github.event_name == 'pull_request' && github.base_ref == 'refs/heads/main'
     steps:
-      - name: Download math result for job 1
-        uses: actions/download-artifact@v3
-        with:
-          name: homework
       - shell: bash
         run: |
-          value=`cat math-homework.txt`
-          expr $value \* 9 > math-homework.txt
-      - name: Upload math result for job 2
-        uses: actions/upload-artifact@v3
-        with:
-          name: homework
-          path: math-homework.txt
+          expr 3 * 9
+      # - name: Download math result for job 1
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: homework
+      # - shell: bash
+      #   run: |
+      #     value=`cat math-homework.txt`
+      #     expr $value \* 9 > math-homework.txt
+      # - name: Upload math result for job 2
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: homework
+      #     path: math-homework.txt
 
   job_3:
-    environment: 'PRD'
+    # environment: 'PRD'
     name: Display results
     needs: job_2
     runs-on: ubuntu-latest
     steps:
-      - name: Download math result for job 2
-        uses: actions/download-artifact@v3
-        with:
-          name: homework
-      - name: Print the final result
-        shell: bash
+      - shell: bash
         run: |
-          value=`cat math-homework.txt`
-          echo The result is $value
+          echo RESULT
+      # - name: Download math result for job 2
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: homework
+      # - name: Print the final result
+      #   shell: bash
+      #   run: |
+      #     value=`cat math-homework.txt`
+      #     echo The result is $value
