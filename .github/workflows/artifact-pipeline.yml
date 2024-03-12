@@ -1,6 +1,7 @@
 name: Share data between jobs
 
 # Controls when the workflow will run
+#testing 
 on:
   # Triggers the workflow on push or pull request events but only for the "develop" branch
   push:
@@ -9,13 +10,12 @@ on:
       - 'develop'
       - 'release/*' 
  
-  pull_request:
-
 jobs:
   job_1:
     # #environment: 'DEV'
     name: Add 3 and 7
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
     steps:
       - shell: bash
         run: |
@@ -29,9 +29,10 @@ jobs:
   job_2:
     # environment: 'HOM'
     name: Multiply by 9
-    needs: job_1
+    # needs: job_1
     runs-on: ubuntu-latest
-    if: github.event.pull_request.base.ref == 'refs/heads/main'
+    # if: github.event.pull_request.base.ref == 'refs/heads/main'
+    if: startsWith(github.ref, 'refs/heads/release')
     steps:
       - shell: bash
         run: |
@@ -51,10 +52,11 @@ jobs:
       #     path: math-homework.txt
 
   job_3:
-    # environment: 'PRD'
+    environment: 'PRD'
     name: Display results
     needs: job_2
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/release') || startsWith(github.ref, 'refs/heads/hotfix')
     steps:
       - shell: bash
         run: |
