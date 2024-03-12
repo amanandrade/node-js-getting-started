@@ -33,7 +33,7 @@ jobs:
     # needs: job_1
     runs-on: ubuntu-latest
     # if: github.event.pull_request.base.ref == 'refs/heads/main'
-    if: startsWith(github.ref, 'refs/heads/release')
+    if: startsWith(github.ref, 'refs/heads/release') || startsWith(github.ref, 'refs/heads/hotfix')
     steps:
       - shell: bash
         run: |
@@ -57,7 +57,7 @@ jobs:
     name: Display results
     needs: job_2
     runs-on: ubuntu-latest
-    if: (startsWith(github.ref, 'refs/heads/release')) || (startsWith(github.ref, 'refs/heads/hotfix'))
+    if: startsWith(github.ref, 'refs/heads/release') || startsWith(github.ref, 'refs/heads/hotfix')
     steps:
       - shell: bash
         run: |
