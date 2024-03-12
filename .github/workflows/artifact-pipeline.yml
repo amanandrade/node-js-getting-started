@@ -12,7 +12,7 @@ on:
   pull_request:
     types: [opened, synchronize]
     branches: 
-      - 'develop'    
+      - 'develop'
 
 jobs:
   job_1:
