@@ -26,6 +26,8 @@ jobs:
     #       name: homework
     #       path: math-homework.txt
     - name: create pull request
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         sudo apt-get update
         gh --version
