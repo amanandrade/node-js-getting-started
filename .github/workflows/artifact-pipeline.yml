@@ -12,61 +12,72 @@ on:
  
 jobs:
   job_1:
-    # #environment: 'DEV'
-    name: Add 3 and 7
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
-    steps:
-      - shell: bash
-        run: |
-          expr 3 + 7 > math-homework.txt
-      - name: Upload math result for job 1
-        uses: actions/upload-artifact@v3
-        with:
-          name: homework
-          path: math-homework.txt
+    # # #environment: 'DEV'
+    # name: Add 3 and 7
+    # runs-on: ubuntu-latest
+    # if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
+    # steps:
+    #   - shell: bash
+    #     run: |
+    #       expr 3 + 7 > math-homework.txt
+    #   - name: Upload math result for job 1
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: homework
+    #       path: math-homework.txt
+    - name: create pull request
+      run: |
+        sudo apt-get update
+        gh --version
+        if [ 'gh pr list --state open --search "PROD - Create PR to deploy PROD - ${{github.ref_name}} in:title"' ]; then
+          echo "PR for Production already exists: "
+          echo "Updating PR..."
+        else
+          echo "Creating Pull Request"
+        fi
+    
 
-  job_2:
-    # environment: 'HOM'
-    name: Multiply by 9
-    # needs: job_1
-    runs-on: ubuntu-latest
-    # if: github.event.pull_request.base.ref == 'refs/heads/main'
-    if: startsWith(github.ref, 'refs/heads/release')
-    steps:
-      - shell: bash
-        run: |
-          expr 3 * 9
-      # - name: Download math result for job 1
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: homework
-      # - shell: bash
-      #   run: |
-      #     value=`cat math-homework.txt`
-      #     expr $value \* 9 > math-homework.txt
-      # - name: Upload math result for job 2
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: homework
-      #     path: math-homework.txt
+  # job_2:
+  #   # environment: 'HOM'
+  #   name: Multiply by 9
+  #   # needs: job_1
+  #   runs-on: ubuntu-latest
+  #   # if: github.event.pull_request.base.ref == 'refs/heads/main'
+  #   if: startsWith(github.ref, 'refs/heads/release')
+  #   steps:
+  #     - shell: bash
+  #       run: |
+  #         expr 3 * 9
+  #     # - name: Download math result for job 1
+  #     #   uses: actions/download-artifact@v3
+  #     #   with:
+  #     #     name: homework
+  #     # - shell: bash
+  #     #   run: |
+  #     #     value=`cat math-homework.txt`
+  #     #     expr $value \* 9 > math-homework.txt
+  #     # - name: Upload math result for job 2
+  #     #   uses: actions/upload-artifact@v3
+  #     #   with:
+  #     #     name: homework
+  #     #     path: math-homework.txt
 
-  job_3:
-    environment: 'PRD'
-    name: Display results
-    needs: job_2
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/release') || startsWith(github.ref, 'refs/heads/hotfix')
-    steps:
-      - shell: bash
-        run: |
-          echo RESULT
-      # - name: Download math result for job 2
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: homework
-      # - name: Print the final result
-      #   shell: bash
-      #   run: |
-      #     value=`cat math-homework.txt`
-      #     echo The result is $value
+  # job_3:
+  #   environment: 'PRD'
+  #   name: Display results
+  #   needs: job_2
+  #   runs-on: ubuntu-latest
+  #   if: startsWith(github.ref, 'refs/heads/release') || startsWith(github.ref, 'refs/heads/hotfix')
+  #   steps:
+  #     - shell: bash
+  #       run: |
+  #         echo RESULT
+  #     # - name: Download math result for job 2
+  #     #   uses: actions/download-artifact@v3
+  #     #   with:
+  #     #     name: homework
+  #     # - name: Print the final result
+  #     #   shell: bash
+  #     #   run: |
+  #     #     value=`cat math-homework.txt`
+  #     #     echo The result is $value
