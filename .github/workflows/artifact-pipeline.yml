@@ -14,9 +14,9 @@ jobs:
   job_1:
     # # #environment: 'DEV'
     # name: Add 3 and 7
-    # runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     # if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
-    # steps:
+    steps:
     #   - shell: bash
     #     run: |
     #       expr 3 + 7 > math-homework.txt
