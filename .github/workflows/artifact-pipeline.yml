@@ -37,7 +37,7 @@ jobs:
         sudo apt-get update
         gh --version
         gh pr list --state open --search "PROD in:title"
-        if [ 'gh pr list --search "PROD - Create PR to deploy PROD - ${{github.ref_name}} in:title"' ]; then
+        if [ 'gh pr list --state open --search "PROD in:title' ]; then
           echo "PR for Production already exists: "
           echo "Updating PR..."
         else
