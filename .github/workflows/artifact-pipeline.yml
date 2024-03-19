@@ -36,8 +36,8 @@ jobs:
       run: |
         sudo apt-get update
         gh --version
-        gh pr list --state closed --search "Feature in:title" | grep -E "2023"
-        if [ 'gh pr list --state closed --search "Feature in:title" | grep -E "2023"' ]; then
+        gh pr list --state closed --search "Feature in:title" | grep -E "202003"
+        if [ 'gh pr list --state closed --search "Feature in:title" | grep -E "202003"' ]; then
           echo "PR for Production already exists: "
           echo "Updating PR..."
         else
