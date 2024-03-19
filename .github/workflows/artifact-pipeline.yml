@@ -36,8 +36,8 @@ jobs:
       run: |
         sudo apt-get update
         gh --version
-        gh pr list --state open --search "PROD in:title"
-        if [ 'gh pr list --state open --search "PROD in:title' ]; then
+        gh pr list --state closed --search "Feature in:title" | grep -E "20240304000"
+        if [ 'gh pr list --state open --search "Feature in:title' ]; then
           echo "PR for Production already exists: "
           echo "Updating PR..."
         else
