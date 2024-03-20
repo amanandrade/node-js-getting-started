@@ -39,7 +39,7 @@ jobs:
 
         filter_status=$(gh pr list --state closed --search "Feature in:title" | grep -E "2023" -wc)
         echo $filter_status
-        if [ $filter_status != 0]; then
+        if [ $filter_status != 0 ]; then
           echo "PR for Production already exists:"
           gh pr list --state closed --search "Feature in:title" | grep -E "2023"
           echo "Updating PR..."
