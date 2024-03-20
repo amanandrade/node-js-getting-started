@@ -37,7 +37,7 @@ jobs:
         sudo apt-get update
         gh --version
         echo 001
-        filter_status=$(gh pr list --state closed --search "Feature in:title" | grep -E "202003" wc -l)
+        filter_status=$(gh pr list --state closed --search "Feature in:title" | grep -E "202003" -wc -l)
         echo 002
         echo $filter_status
         echo 003
