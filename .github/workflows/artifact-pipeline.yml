@@ -34,14 +34,25 @@ jobs:
         BRANCH_NAME: ${{ github.ref_name }}
         GH_TOKEN: ${{ github.token }}
       run: |
+        #!/bin/bash
+        
         sudo apt-get update
         gh --version
-        # gh pr list --state closed --search "Feature in:title" | grep -E "202003"
-        if [ 'gh pr list --state closed --search "Feature in:title" | grep -E "202003"' ]; then
-          echo "PR for Production already exists: "
+
+        filter_status=$(gh pr list --state closed --search "Feature in:title" | grep -E "202003" -wc)
+        echo $filter_status
+        if [ $filter_status != 0]; then
+          echo "PR for Production already exists:"
+          gh pr list --state closed --search "Feature in:title" | grep -E "202003"
           echo "Updating PR..."
+          git checkout ${{ github.ref_name }}
+          git fetch --all
+          git pull
+          git push
+          echo "PR updated!"
         else
           echo "Creating Pull Request"
+          #gh pr create -B main -H ${{ github.ref_name }} --title "PROD - Create PR to deploy PROD - ${{github.ref_name}}" --body 'Created by Github Actions'  
         fi
     
 
