@@ -37,11 +37,11 @@ jobs:
         sudo apt-get update
         gh --version
 
-        filter_status=$(gh pr list --state closed --search "Feature in:title" | grep -E "2023" -wc)
+        filter_status=$(gh pr list --state closed --search "Feature in:title" | grep -E "202003" -wc)
         echo $filter_status
         if [ $filter_status != 0 ]; then
           echo "PR for Production already exists:"
-          gh pr list --state closed --search "Feature in:title" | grep -E "2023"
+          gh pr list --state closed --search "Feature in:title" | grep -E "202003"
           echo "Updating PR..."
           git checkout ${{ github.ref_name }}
           git fetch --all
