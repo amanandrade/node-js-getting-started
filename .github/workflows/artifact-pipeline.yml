@@ -43,7 +43,7 @@ jobs:
         echo 003
         if [ $filter_status != 0 ]; then
           echo "PR for Production already exists:"
-          gh pr list --state closed --search "Feature in:title" | grep -E "202003"
+          gh pr list --state closed --search "Feature in:title" | wc -l
           echo "Updating PR..."
           git checkout ${{ github.ref_name }}
           git fetch --all
