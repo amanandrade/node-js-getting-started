@@ -40,6 +40,7 @@ jobs:
         repository: amanandrade/electron-updater-example-private
         path: ./electron-updater-example-private
         token: ${{ secrets.GITHUB_TOKEN }}
+        submodules: recursive
         
     - name: view private repo
       run: |
