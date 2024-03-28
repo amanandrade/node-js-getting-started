@@ -38,6 +38,7 @@ jobs:
       uses: actions/checkout@master
       with:
         repository: amanandrade/electron-updater-example-private
+        path: ./electron-updater-example-private
         token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: view private repo
