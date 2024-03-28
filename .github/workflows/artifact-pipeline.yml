@@ -29,30 +29,45 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: create pull request
-      env:
-        BRANCH_NAME: ${{ github.ref_name }}
-        GH_TOKEN: ${{ github.token }}
+        
+    - name: view current repo
       run: |
-        sudo apt-get update
-        gh --version
-        echo debug_001
-        filter_status=$(gh pr list --state closed --search "TTTXTT in:title" | wc -l)
-        echo debug_002
-        echo $filter_status
-        echo debug_003
-        if [ $filter_status != 0 ]; then
-          echo "PR for Production already exists!"
-          echo "Updating PR..."
-          git checkout ${{ github.ref_name }}
-          git fetch --all
-          git pull
-          git push
-          echo "PR updated!"
-        else
-          echo "Creating Pull Request"
-          #gh pr create -B main -H ${{ github.ref_name }} --title "PROD - Create PR to deploy PROD - ${{github.ref_name}}" --body 'Created by Github Actions'  
-        fi
+        ls -la
+        
+    - name: Check out my other private repo
+      uses: actions/checkout@master
+      with:
+        repository: amanandrade/electron-updater-example-private
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: view private repo
+      run: |
+        ls -la
+
+    # - name: create pull request
+    #   env:
+    #     BRANCH_NAME: ${{ github.ref_name }}
+    #     GH_TOKEN: ${{ github.token }}
+    #   run: |
+    #     sudo apt-get update
+    #     gh --version
+    #     echo debug_001
+    #     filter_status=$(gh pr list --state closed --search "TTTXTT in:title" | wc -l)
+    #     echo debug_002
+    #     echo $filter_status
+    #     echo debug_003
+    #     if [ $filter_status != 0 ]; then
+    #       echo "PR for Production already exists!"
+    #       echo "Updating PR..."
+    #       git checkout ${{ github.ref_name }}
+    #       git fetch --all
+    #       git pull
+    #       git push
+    #       echo "PR updated!"
+    #     else
+    #       echo "Creating Pull Request"
+    #       #gh pr create -B main -H ${{ github.ref_name }} --title "PROD - Create PR to deploy PROD - ${{github.ref_name}}" --body 'Created by Github Actions'  
+    #     fi
     
 
   # job_2:
