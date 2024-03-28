@@ -35,7 +35,7 @@ jobs:
         ls -la
         
     - name: Check out my other private repo
-      uses: actions/checkout@master
+      uses: actions/checkout@v4
       with:
         repository: amanandrade/electron-updater-example-private
         path: ./electron-updater-example-private
