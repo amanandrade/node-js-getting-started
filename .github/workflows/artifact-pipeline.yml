@@ -41,7 +41,7 @@ jobs:
         path: ./electron-updater-example-private
         ref: master
         token: ${{ secrets.GITHUB_TOKEN }}
-        submodules: recursive
+        # submodules: recursive
         
     - name: view private repo
       run: |
