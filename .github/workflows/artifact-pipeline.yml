@@ -9,6 +9,7 @@ on:
       - 'feature/*'
       - 'develop'
       - 'release/*' 
+      - 'main'
  
 jobs:
   job_1:
