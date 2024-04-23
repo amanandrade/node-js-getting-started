@@ -1,16 +1,11 @@
 name: Share data between jobs
 
 # Controls when the workflow will run
-#testing 
 on:
-  # Triggers the workflow on push or pull request events but only for the "develop" branch
-  push:
-    branches:
-      - 'feature/*'
-      - 'develop'
-      - 'release/*' 
-      - 'main'
- 
+  schedule:
+    - cron: "10 18 * * 2"
+      
+
 jobs:
   job_1:
     # # #environment: 'DEV'
@@ -23,115 +18,115 @@ jobs:
     - shell: bash
       run: |
         expr 3 + 7 > math-homework.txt
-    - name: Upload math result for job 1
-      uses: actions/upload-artifact@v3
-      with:
-        name: homework
-        path: math-homework.txt
-    - name: 'Checkout source code'
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+  #   - name: Upload math result for job 1
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: homework
+  #       path: math-homework.txt
+  #   - name: 'Checkout source code'
+  #     uses: actions/checkout@v2
+  #     with:
+  #       fetch-depth: 0
         
-    - name: view current repo
-      run: |
-        ls -la
+  #   - name: view current repo
+  #     run: |
+  #       ls -la
         
-    # - name: Check out my other private repo
-    #   uses: actions/checkout@v4
-    #   with:
-    #     repository: amanandrade/electron-updater-example-private
-    #     path: ./electron-updater-example-private
-    #     ref: master
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     # submodules: recursive
+  #   # - name: Check out my other private repo
+  #   #   uses: actions/checkout@v4
+  #   #   with:
+  #   #     repository: amanandrade/electron-updater-example-private
+  #   #     path: ./electron-updater-example-private
+  #   #     ref: master
+  #   #     token: ${{ secrets.GITHUB_TOKEN }}
+  #   #     # submodules: recursive
         
-    - name: view private repo
-      run: |
-        ls -la
+  #   - name: view private repo
+  #     run: |
+  #       ls -la
         
-    - name: Create pull request to PROD
-      if: github.ref == 'refs/heads/develop'
-      env:
-        BRANCH_NAME: ${{ github.ref_name }}
-        GH_TOKEN: ${{ github.token }}
-      run: |
-            filter_status=$(gh pr list --state open --search "${{github.ref_name}} in:title" | wc -l)
-            if [ $filter_status != 0 ]; then
-              echo "PR for Production already exists!"
-              echo "Updating PR..."
-              git checkout ${{ github.ref_name }}
-              git fetch --all
-              git pull
-              git push
-              echo "PR updated!"
-            else
-              echo "Creating Pull Request"
-              gh pr create -B main -H ${{ github.ref_name }} --title "PROD - Create PR to deploy PROD - ${{github.ref_name}}" --body 'Created by Github Actions'  
-            fi
+  #   - name: Create pull request to PROD
+  #     if: github.ref == 'refs/heads/develop'
+  #     env:
+  #       BRANCH_NAME: ${{ github.ref_name }}
+  #       GH_TOKEN: ${{ github.token }}
+  #     run: |
+  #           filter_status=$(gh pr list --state open --search "${{github.ref_name}} in:title" | wc -l)
+  #           if [ $filter_status != 0 ]; then
+  #             echo "PR for Production already exists!"
+  #             echo "Updating PR..."
+  #             git checkout ${{ github.ref_name }}
+  #             git fetch --all
+  #             git pull
+  #             git push
+  #             echo "PR updated!"
+  #           else
+  #             echo "Creating Pull Request"
+  #             gh pr create -B main -H ${{ github.ref_name }} --title "PROD - Create PR to deploy PROD - ${{github.ref_name}}" --body 'Created by Github Actions'  
+  #           fi
             
-    - name: Create pull request to equalize environments-DEV
-      if: github.ref == 'refs/heads/main'
-      env:
-        BRANCH_NAME: ${{ github.ref_name }}
-        GH_TOKEN: ${{ github.token }}
-      run: |
-            filter_status=$(gh pr list --state open --search "${{github.ref_name}} in:title" | wc -l)
-            if [ $filter_status != 0 ]; then
-              echo "PR for equalize environments (DEV) already exists!"
-              echo "Updating PR..."
-              git checkout ${{ github.ref_name }}
-              git fetch --all
-              git pull
-              git push
-              echo "PR updated!"
-            else
-              echo "Creating Pull Request"
-              gh pr create -B develop -H ${{ github.ref_name }} --title "DEV - Create PR to equalize environments - ${{github.ref_name}}" --body 'Created by Github Actions'  
-            fi
+  #   - name: Create pull request to equalize environments-DEV
+  #     if: github.ref == 'refs/heads/main'
+  #     env:
+  #       BRANCH_NAME: ${{ github.ref_name }}
+  #       GH_TOKEN: ${{ github.token }}
+  #     run: |
+  #           filter_status=$(gh pr list --state open --search "${{github.ref_name}} in:title" | wc -l)
+  #           if [ $filter_status != 0 ]; then
+  #             echo "PR for equalize environments (DEV) already exists!"
+  #             echo "Updating PR..."
+  #             git checkout ${{ github.ref_name }}
+  #             git fetch --all
+  #             git pull
+  #             git push
+  #             echo "PR updated!"
+  #           else
+  #             echo "Creating Pull Request"
+  #             gh pr create -B develop -H ${{ github.ref_name }} --title "DEV - Create PR to equalize environments - ${{github.ref_name}}" --body 'Created by Github Actions'  
+  #           fi
     
 
-  # job_2:
-  #   # environment: 'HOM'
-  #   name: Multiply by 9
-  #   # needs: job_1
-  #   runs-on: ubuntu-latest
-  #   # if: github.event.pull_request.base.ref == 'refs/heads/main'
-  #   if: startsWith(github.ref, 'refs/heads/release')
-  #   steps:
-  #     - shell: bash
-  #       run: |
-  #         expr 3 * 9
-  #     # - name: Download math result for job 1
-  #     #   uses: actions/download-artifact@v3
-  #     #   with:
-  #     #     name: homework
-  #     # - shell: bash
-  #     #   run: |
-  #     #     value=`cat math-homework.txt`
-  #     #     expr $value \* 9 > math-homework.txt
-  #     # - name: Upload math result for job 2
-  #     #   uses: actions/upload-artifact@v3
-  #     #   with:
-  #     #     name: homework
-  #     #     path: math-homework.txt
+  # # job_2:
+  # #   # environment: 'HOM'
+  # #   name: Multiply by 9
+  # #   # needs: job_1
+  # #   runs-on: ubuntu-latest
+  # #   # if: github.event.pull_request.base.ref == 'refs/heads/main'
+  # #   if: startsWith(github.ref, 'refs/heads/release')
+  # #   steps:
+  # #     - shell: bash
+  # #       run: |
+  # #         expr 3 * 9
+  # #     # - name: Download math result for job 1
+  # #     #   uses: actions/download-artifact@v3
+  # #     #   with:
+  # #     #     name: homework
+  # #     # - shell: bash
+  # #     #   run: |
+  # #     #     value=`cat math-homework.txt`
+  # #     #     expr $value \* 9 > math-homework.txt
+  # #     # - name: Upload math result for job 2
+  # #     #   uses: actions/upload-artifact@v3
+  # #     #   with:
+  # #     #     name: homework
+  # #     #     path: math-homework.txt
 
-  # job_3:
-  #   environment: 'PRD'
-  #   name: Display results
-  #   needs: job_2
-  #   runs-on: ubuntu-latest
-  #   if: startsWith(github.ref, 'refs/heads/release') || startsWith(github.ref, 'refs/heads/hotfix')
-  #   steps:
-  #     - shell: bash
-  #       run: |
-  #         echo RESULT
-  #     # - name: Download math result for job 2
-  #     #   uses: actions/download-artifact@v3
-  #     #   with:
-  #     #     name: homework
-  #     # - name: Print the final result
-  #     #   shell: bash
-  #     #   run: |
-  #     #     value=`cat math-homework.txt`
-  #     #     echo The result is $value
+  # # job_3:
+  # #   environment: 'PRD'
+  # #   name: Display results
+  # #   needs: job_2
+  # #   runs-on: ubuntu-latest
+  # #   if: startsWith(github.ref, 'refs/heads/release') || startsWith(github.ref, 'refs/heads/hotfix')
+  # #   steps:
+  # #     - shell: bash
+  # #       run: |
+  # #         echo RESULT
+  # #     # - name: Download math result for job 2
+  # #     #   uses: actions/download-artifact@v3
+  # #     #   with:
+  # #     #     name: homework
+  # #     # - name: Print the final result
+  # #     #   shell: bash
+  # #     #   run: |
+  # #     #     value=`cat math-homework.txt`
+  # #     #     echo The result is $value
