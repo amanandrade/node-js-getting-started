@@ -27,7 +27,8 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Print on job summay
-        run: echo #----DEVELOP---:black_cat: >> $GITHUB_STEP_SUMMARY
+        run: |
+            echo "#----DEVELOP---:black_cat:" >> $GITHUB_STEP_SUMMARY
 
   integration:  
     if: startsWith(github.ref, 'refs/heads/release')
