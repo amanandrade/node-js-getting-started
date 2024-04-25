@@ -28,7 +28,7 @@ jobs:
         
       - name: Print on job summay
         run: |
-            echo -e "#----DEVELOP--- :black_cat:" > message.md
+            echo -e "# DEVELOP :black_cat:" > message.md
             cat message.md >> $GITHUB_STEP_SUMMARY
 
   integration:  
