@@ -28,7 +28,8 @@ jobs:
         
       - name: Print on job summay
         run: |
-            echo "#----DEVELOP---:black_cat:" >> $GITHUB_STEP_SUMMARY
+            echo "#----DEVELOP---:black_cat:" > message.md
+            cat message.md >> $GITHUB_STEP_SUMMARY
 
   integration:  
     if: startsWith(github.ref, 'refs/heads/release')
