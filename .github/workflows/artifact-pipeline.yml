@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Print on job summay
-        run: echo #----INTEGRATION---:skunk: >> $GITHUB_STEP_SUMMARY
+        run: echo "# INTEGRATION :skunk:" >> $GITHUB_STEP_SUMMARY
 
   uat:  
     if: startsWith(github.ref, 'refs/heads/release') 
@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Print on job summay
-        run: echo #----UAT---:cow: >> $GITHUB_STEP_SUMMARY
+        run: echo "# UAT :cow:" >> $GITHUB_STEP_SUMMARY
 
   prod:  
     if: github.ref == 'refs/heads/main'
