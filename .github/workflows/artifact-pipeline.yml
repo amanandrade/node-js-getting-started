@@ -17,7 +17,8 @@ on:
       - 'release/*'
       - 'hotfix/*'
       - 'main'
-      - '!release/RLC-wave*'
+    branches-ignore:
+      - release/RLC-wave*
 
 jobs:
   develop:
