@@ -33,8 +33,8 @@ jobs:
             cat message.md >> $GITHUB_STEP_SUMMARY
 
   integration:  
-    # if: startsWith(github.ref, 'refs/heads/release')
-    if: startsWith(github.ref, 'refs/heads/release') && github.ref!='refs/heads/release/RLC-wave1'
+    if: startsWith(github.ref, 'refs/heads/release')
+    # if: startsWith(github.ref, 'refs/heads/release') && github.ref!='refs/heads/release/RLC-wave1'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
