@@ -32,7 +32,8 @@ jobs:
             echo -e "# DEVELOP :black_cat:" > message.md
             cat message.md >> $GITHUB_STEP_SUMMARY
 
-  integration:  
+  integration:
+    needs: develop
     if: startsWith(github.ref, 'refs/heads/release')
     # if: startsWith(github.ref, 'refs/heads/release') && github.ref!='refs/heads/release/RLC-wave1'
     runs-on: ubuntu-latest
