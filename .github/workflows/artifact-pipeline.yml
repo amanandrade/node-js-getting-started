@@ -17,7 +17,7 @@ on:
       # - 'release/*'
       # - 'hotfix/*'
       # - 'main'
-      -'!*'
+      -'!release/RLC-wave1'
 
 jobs:
   develop:
