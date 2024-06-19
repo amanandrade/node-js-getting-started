@@ -27,8 +27,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests publish results
+        run: |
+          npm test | tee result.log
+          test_result=$(tail -n 1 result.log)
+          echo "$test_result" 
       
       - name: Print on job summay
         run: |
