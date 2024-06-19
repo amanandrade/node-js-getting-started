@@ -1,73 +1,73 @@
-# #------------------------------------------------------------------------------------------
-# # Pipeline: acionar do modelo de pipeline para salesforce no repo scriptspipeline 
-# # Autor   : DevSecOps Accenture
-# # Descr   : Pipeline responsável por acionar o modelo do pipeline no script pipeline.
-# # Atensão : Para seu pleno funcionamento e necessario indicar os modelos de 
-# #           acionamento, disponivel no repo scriptpipeline
-# #-------------------------------------------------------------------------------------------
-# name: Pipeline Salesforce
+#------------------------------------------------------------------------------------------
+# Pipeline: acionar do modelo de pipeline para salesforce no repo scriptspipeline 
+# Autor   : DevSecOps Accenture
+# Descr   : Pipeline responsável por acionar o modelo do pipeline no script pipeline.
+# Atensão : Para seu pleno funcionamento e necessario indicar os modelos de 
+#           acionamento, disponivel no repo scriptpipeline
+#-------------------------------------------------------------------------------------------
+name: Pipeline Salesforce
 
-# # Controls when the workflow will run
-# # on:
-# #   # Triggers the workflow on push or pull request events but only for the "develop" branch
-# #   push:
-# #     branches:
-# #       - 'feature/*'
-# #       - 'develop'
-# #       - 'release/*'
-# #       - 'hotfix/*'
-# #       - 'main'
+Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "develop" branch
+  push:
+    branches:
+      # - 'feature/*'
+      # - 'develop'
+      # - 'release/*'
+      - 'hotfix/*'
+      # - 'main'
 
-# jobs:
-#   develop:
-#     if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout source code
-#         uses: actions/checkout@v3
+jobs:
+  develop:
+    if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
         
-#       - name: Print on job summay
-#         run: |
-#             echo -e "# DEVELOP :black_cat:" > message.md
-#             cat message.md >> $GITHUB_STEP_SUMMARY
+      - name: Print on job summay
+        run: |
+            echo -e "# DEVELOP :black_cat:" > message.md
+            cat message.md >> $GITHUB_STEP_SUMMARY
 
-#   integration:  
-#     if: startsWith(github.ref, 'refs/heads/release')
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout source code
-#         uses: actions/checkout@v3
+  integration:  
+    if: startsWith(github.ref, 'refs/heads/release')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
         
-#       - name: Print on job summay
-#         run: echo "# INTEGRATION :skunk:" >> $GITHUB_STEP_SUMMARY
+      - name: Print on job summay
+        run: echo "# INTEGRATION :skunk:" >> $GITHUB_STEP_SUMMARY
 
-#   uat:  
-#     if: startsWith(github.ref, 'refs/heads/release') 
-#     needs: integration
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout source code
-#         uses: actions/checkout@v3
+  uat:  
+    if: startsWith(github.ref, 'refs/heads/release') 
+    needs: integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
         
-#       - name: Print on job summay
-#         run: echo "# UAT :cow:" >> $GITHUB_STEP_SUMMARY
+      - name: Print on job summay
+        run: echo "# UAT :cow:" >> $GITHUB_STEP_SUMMARY
 
-#   prod:  
-#     if: github.ref == 'refs/heads/main'
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout source code
-#         uses: actions/checkout@v3
+  prod:  
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
         
-#       - name: Print on job summay
-#         run: echo "# PRODUCTION :bat:" >> $GITHUB_STEP_SUMMARY
+      - name: Print on job summay
+        run: echo "# PRODUCTION :bat:" >> $GITHUB_STEP_SUMMARY
 
-#   hotfix:  
-#     if: startsWith(github.ref, 'refs/heads/hotfix')
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout source code
-#         uses: actions/checkout@v3
+  hotfix:  
+    if: startsWith(github.ref, 'refs/heads/hotfix')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
         
-#       - name: Print on job summay
-#         run: echo "# HOTFIX :sloth:" >> $GITHUB_STEP_SUMMARY
+      - name: Print on job summay
+        run: echo "# HOTFIX :sloth:" >> $GITHUB_STEP_SUMMARY
