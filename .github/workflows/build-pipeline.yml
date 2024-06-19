@@ -32,7 +32,7 @@ jobs:
         run: |
           npm test | tee result.log
           test_result=$(tail -n 1 result.log)
-          cho "::set-output name=test_result::$test_result 
+          echo "::set-output name=test_result::$test_result 
       
       - name: Print on job summay
         run: |
