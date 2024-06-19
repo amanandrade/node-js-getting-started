@@ -27,18 +27,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests publish results
+      - name: Run tests and publish results
         id: test
         run: |
           npm test | tee result.log
-          # test_result=$(tail -n 1 result.log)
           test_result=$(cat result.log)
-          echo "::set-output name=test_result::$test_result" 
-      
-      - name: Print on job summay
-        run: |
-            echo -e "# Build e teste da aplicação :black_cat: \nTest Result: ${{ needs.outputs.test_result }} " > message.md
-            cat message.md >> $GITHUB_STEP_SUMMARY
+          echo -e "# Build e teste da aplicação :black_cat: \nTest Result: $test_result" > message.md
+          cat message.md >> $GITHUB_STEP_SUMMARY         
 
   deploy:
     runs-on: ubuntu-latest
