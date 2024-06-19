@@ -36,9 +36,8 @@ jobs:
       
       - name: Print on job summay
         run: |
-            echo -e "# Build e teste da aplicação :black_cat:" > message.md
+            echo -e "# Build e teste da aplicação :black_cat: \nTest Result: ${{ needs.outputs.test_result }} " > message.md
             cat message.md >> $GITHUB_STEP_SUMMARY
-            echo "Test Result: ${{ needs.outputs.test_result }}"
 
   deploy:
     runs-on: ubuntu-latest
