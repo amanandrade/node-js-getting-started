@@ -1,0 +1,60 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+      - 'develop'
+      - 'main'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+      
+      - name: Print on job summay
+        run: |
+            echo -e "# Build e teste da aplicação :black_cat:" > message.md
+            cat message.md >> $GITHUB_STEP_SUMMARY
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # - name: Set up SSH keys
+      #   uses: webfactory/ssh-agent@v0.5.4
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to server
+        run: |
+          # ssh user@your-server 'cd /path/to/your/app && git pull origin main && npm install && npm run build && pm2 restart your-app'
+          npm install && npm start
+
+      - name: Print on job summay
+        run: |
+            echo -e "# Aplicação rodando no localhost:5000 :bat:" > message.md
+            cat message.md >> $GITHUB_STEP_SUMMARY
