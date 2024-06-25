@@ -8,24 +8,28 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node test.js"
+    "test": "node test.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "ejs": "^3.1.5",
     "express": "^4.15.2"
   },
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "got": "^11.3.0",
     "tape": "^4.7.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/amanandrade/node-js-getting-started"
   },
   "keywords": [
     "node",
     "heroku",
     "express"
   ],
+  "homepage": "https://amanandrade.github.io/node-js-getting-started",
   "license": "MIT"
 }
